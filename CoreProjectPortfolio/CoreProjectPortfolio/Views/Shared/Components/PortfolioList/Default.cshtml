@@ -1,0 +1,24 @@
+﻿@model List<EntityLayer.Concrete.Portfolio>
+<div class="section px-2 px-lg-4 pt-5" id="portfolio">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="marker marker-center">Projelerim</h2>
+        </div>
+        <div class="grid bp-gallery pb-3" data-aos="zoom-in-up" data-aos-delay="100">
+            <div class="grid-sizer"></div>
+            @foreach(var x in Model){
+            <div class="grid-item">
+                <a href="@x.ProjectUrl">
+                    <figure class="portfolio-item">
+                            <img src="@x.ImageUrl" data-bp="@x.ImageUrl"  />
+                        <figcaption>
+                            <h4 class="h5 mb-0">@x.Name</h4>
+                            <div>Github</div>
+                        </figcaption>
+                    </figure>
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+</div>

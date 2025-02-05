@@ -1,0 +1,48 @@
+﻿@model EntityLayer.Concrete.Portfolio
+@{
+    ViewData["Title"] = "getportfolio";
+    Layout = "~/Views/Shared/_newadminLayout.cshtml";
+}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Projelerin Güncellendiği Sayfadır.</h4>
+            @using (Html.BeginForm("getportfolio", "Portfolio", FormMethod.Post))
+            {  @Html.HiddenFor(x=>x.PortfolioId)
+                <div class="form-group">
+                    <label>Platform:</label>
+                    <input type="text" class="form-control" style="color:white" asp-for="Platform">
+                </div>
+                <div class="form-group">
+                    <label>Proje Adı:</label>
+                    <input class="form-control" asp-for=Name style="color:white">
+                </div>
+                <div class="form-group">
+                    <label>Maliyet:</label>
+                    <input class="form-control" asp-for="Price" style="color:white">
+                </div>
+                <div class="form-group">
+                    <label>Tamamlanma Oranı::</label>
+                    <input class="form-control" asp-for="Value" style="color:white">
+                </div>
+                <div class="form-group">
+                    <label>Resim Url:</label>
+                    <input class="form-control" asp-for="ImageUrl" style="color:white">
+                </div>
+                <div class="form-group">
+                    <label>Proje Url:</label>
+                    <input class="form-control" asp-for="ProjectUrl" style="color:white">
+                </div>
+                <button type="submit" class="btn btn-outline-success mr-2">Güncelle</button>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+﻿@model List<EntityLayer.Concrete.Experience>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_newadminlayout.cshtml";
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Deneyimler</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr >
+                            <th style="color:white">#</th>
+                            <th style="color:white">Firma:</th>
+                            <th style="color:white">Statü-Tarih:</th>
+                            <th style="color:white">SİL</th>
+                            <th style="color:white">Güncelle:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var x in Model){
+                        <tr>
+                            <td>@x.ExperienceId</td>
+                            <td>@x.Name</td>
+                            <td>@x.Date</td>
+                                <td><a href="/Experience/deleteexperience/@x.ExperienceId/" class="btn btn-outline-danger">Sil</a></td>
+                                <td><a href="/Experience/getexperience/@x.ExperienceId/" class="btn btn-outline-warning">Güncelle</a></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                <a style="margin-top:10px" href="/Experience/addexperience/" class="btn btn-outline-success mr-2">Yeni Deneyim</a>
+            </div>
+        </div>
+    </div>
+</div>

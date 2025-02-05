@@ -1,0 +1,139 @@
+﻿@model List<EntityLayer.Concrete.Experience>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_newadminlayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="p-2">
+        <button class="btn btn-primary" type="button" id="getlistall">Deneyim Listesi</button>
+        <button class="btn btn-primary" type="button" id="btnadd">Deneyim Ekle</button>
+        <button class="btn btn-primary" type="button" id="btnid">Deneyim Getir</button>
+        <button class="btn btn-primary" type="button" id="btndelete">Deneyim Sil</button>
+        <button class="btn btn-primary" type="button" id="btnupdate">Deneyim Güncelle</button>
+
+    </div>
+</div>
+
+<br />
+
+<h4 class="text-center">Yazar Listesi</h4>
+<div class="p-2" id="experiencelist">
+    @*id değerine göre işlem yapacaz aşağıda*@
+    
+</div>
+<br />
+
+<h4 class="text-center">Ekleme İşlemi</h4>
+
+<div class="col-md-12">
+    <input style="margin-top:8px" type="text" class="form-control" id="inpname" placeholder="Deneyim Adı" />
+    <input style="margin-top:8px" type="text" class="form-control" id="inpdate" placeholder="Tarih" />
+</div>
+
+<br />
+<h4 class="text-center">Id'ye göre deneyim getirme işlemi</h4>
+<div class="col-md-12" >
+
+    <input style="margin-top:8px" type="text" class="form-control" id="inpid" placeholder="Id" />
+</div>
+<br />
+<h4 class="text-center">Id'ye göre Silme işlemi</h4>
+<div class="col-md-12">
+    <input style="margin-top:8px" type="text" class="form-control" id="inpdeleteid" placeholder="Id" />
+</div>
+
+@*Ajaxı kullanabilmem için aşağıdaki işlemleri yapmam gerekli*@
+@section Scripts
+{
+    <script>
+        //LİSTELEME
+        @*id'si getlistall olan butona tıklanıldığı zaman*@
+            $("#getlistall").click(function()
+                {
+                $.ajax(
+                    {
+                        contentType: "application/json",
+                        dataType: "json",
+                        type: "get",//sayfa çağırıldığında
+                        url: "/Experience2/ListExperience/",@*listelenecek json türünde oluşturduğumuz metodun url actionunu verdik*@
+                success: function (funk) //yukardaki function işlemim başarılı olduysa funk isimli değerime işlemi ata
+                {   //js'de değişkenler let ile tanımlanır
+                    let elist = jQuery.parseJSON(funk);//funk değişkenime atanmış işlemdeki listeleri json türüne çevir
+                    console.log(elist);//elist'e atanmış değerleri yazdır
+                    //console.log yazdırmak için kullanılır
+
+                        let htmllst = "<table class=table table-bordered> <tr> <th>Id</th> <th>Başlık</th> <th>tarih</th> </tr>";
+                        $.each(elist, (index, value) =>
+                        //elist'e bağlı verilere göre döngü oluştur
+                        {
+                            htmllst += `<tr> <td>${value.ExperienceId}</td> <td>${value.Name}</td> <td>${value.Date}</td> </tr>`
+                        });
+                        htmllst += "</table>";
+                    //aşağıdaki experiencelist yukarıdaki divlerde kullanılan id değeridir o divin içerisinde listelemek için kullandık
+                        $("#experiencelist").html(htmllst);
+                }
+                        });
+        });
+        //EKLEME
+        //btnadd id'li butona tıklanıldığında aşağıdaki işlemler yapılacak
+        $("#btnadd").click(function () {
+            let values =//values değişkeni oluşturdum
+            {
+                name: $("#inpname").val(),//deneyim tablomda eklenmesi gereken sütunlarıma 
+                Date: $("#inpdate").val() //atamalarımı yapıyorum inputlardan alıyorum verileri
+            };
+            $.ajax(
+                {
+                    type: "post",
+                    url: "/Experience2/AddExperience/",
+                    data: values, //veriler nereden gelecek
+                    success: function (funk1)//yukarıdaki işlem başarılıysa işlemleri funk1 adlı değişkene ata 
+                    {
+                        let result = jQuery.parseJSON(funk1);//funk değişkenime atanmış işlemdeki listeleri json türüne çevir
+                        alert(result.name + "deneyim başarılı bir şekilde eklendi");
+                    }
+                });
+        });
+        //Id'ye GÖRE GETİRME
+        $("#btnid").click(x => {
+            let id = $("#inpid").val();
+
+            $.ajax(
+                {
+                    contentType: "application/json",
+                    dataType: "json",
+                    type: "get",
+                    url: "/Experience2/GetExperienceById/",
+                    data: { ExperienceId: id },
+                    success: function (funk2) {
+
+                        let result = jQuery.parseJSON(funk2);
+                        console.log(result);
+                        let htmllst1 = `<table class=table table-hover> <tr><th>Deneyim Id</th> <td>${result.ExperienceId}</td><tr><th>Deneyim Başlık<th><td>${result.Name}</td></tr><tr><th>Deneyim Tarih<th><td>${result.Date}</td></tr></table>`;
+                        $("#experiencelist").html(htmllst1);//experiencelist id'li divde listele
+                    }
+                });
+            
+        });
+        //İd'ye göre silme
+        $("#btndelete").click(x => {
+            let id = $("#inpdeleteid").val();
+            $.ajax(
+                {
+                    url: "/Experience2/DeleteExperience/" + id,//id'ye göre bulup silmesi için +->dan sonra id değeri aldık parametre olarak yolladık
+                    type:"post",
+                    contentType:"application/json",
+                    dataType:"json",
+                    success: function (funk3) 
+                    {
+                        loadData();
+                    }
+                });
+        });
+
+    </script>
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@*yukardaki scriptin çalışması için gerekli wwwrootiçerisindeki lib içindeki jqueryde *@
+

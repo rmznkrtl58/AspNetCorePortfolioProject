@@ -1,0 +1,42 @@
+﻿@model List<EntityLayer.Concrete.Skill>
+@{string renk=" ";}
+<div class="section px-3 px-lg-4 pt-5" id="skills">
+    <div class="container-narrow">
+        <div class="text-center mb-5">
+            <h2 class="marker marker-center">Yeteneklerim</h2>
+        </div>
+        <div class="text-center">
+            <p class="mx-auto mb-3" style="max-width:600px">ASP.NET Core ile güçlü ve ölçeklenebilir web uygulamaları geliştirme konusunda uzmanım. RESTful API'ler, mikro hizmet mimarileri ve veri tabanı yönetimi konularında deneyimim var. Ayrıca, kullanıcı deneyimini ön planda tutarak, modern ve etkili çözümler sunmayı hedefliyorum. Sürekli öğrenme ve yenilikleri takip etme tutkumla, projelerime en son teknolojileri entegre ediyorum.</p>
+        </div>
+        <div class="bg-light p-3">
+            <div class="row">
+                @foreach(var x in Model){
+                    if (int.Parse(x.Value) < 70)
+                    {
+                        renk = "progress-bar bg-danger";
+                    }
+                    if (int.Parse(x.Value) > 70 && int.Parse(x.Value)<80)
+                    {
+                        renk = "progress-bar bg-primary";
+                    }
+                    if (int.Parse(x.Value) > 80 && int.Parse(x.Value) < 90)
+                    {
+                        renk = "progress-bar bg-info";
+                    }
+                    if (int.Parse(x.Value) >= 90 )
+                    {
+                        renk = "progress-bar bg-success";
+                    }
+                    <div class="col-md-12">
+                    <div class="py-1">
+                        <div class="d-flex text-small fw-bolder"><span class="me-auto">@x.Title</span><span>@x.Value%</span></div>
+                        <div class="progress my-1">
+                            <div class="@renk" role="progressbar" data-aos="zoom-in-right" data-aos-delay="100" data-aos-anchor=".skills-section" style="width: @x.Value%" aria-valuenow="@x.Value" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

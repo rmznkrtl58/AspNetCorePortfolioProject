@@ -1,0 +1,34 @@
+﻿@model EntityLayer.Concrete.Experience
+@{
+    ViewData["Title"] = "addexperience";
+    Layout = "~/Views/Shared/_newadminlayout.cshtml";
+}
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Deneyimlerin Eklendiği Sayfadır.</h4>
+                @using (Html.BeginForm("addexperience","Experience",FormMethod.Post)){
+                    <div class="form-group">
+                        <label >Firma:</label>
+                        <input type="text"  class="form-control" style="color:white"  asp-for="Name">
+                    </div>
+                    <div class="form-group">
+                        <label >Statü-Tarih:</label>
+                    <input class="form-control" asp-for=Date style="color:white">
+                    </div>
+                    <div class="form-group">
+                        <label >Resim Url:</label>
+                    <input class="form-control" asp-for="ImageUrl" style="color:white">
+                    </div>
+                    <div class="form-group">
+                        <label >Açıklama:</label>
+                    <textarea style="color:white" class="form-control" rows="4" asp-for="Description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success mr-2">Kaydet</button>
+            }
+            </div>
+        </div>
+    </div>
+
+
+

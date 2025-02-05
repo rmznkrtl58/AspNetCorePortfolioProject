@@ -1,0 +1,19 @@
+﻿@model EntityLayer.Concrete.Announcement
+@{
+    ViewData["Title"] = "Getdetails";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h3>Duyuru Detayları</h3>
+@using (Html.BeginForm("Getdetails","Default",FormMethod.Get)){
+    @Html.HiddenFor(x=>x.Id)
+    <div style="margin-top:8px">
+        <label>Başlık:</label>
+       @Html.TextBoxFor(x=>x.Title,new{@class="form-control"})
+    </div>
+    <div style="margin-top:8px">
+        <label>İçerik:</label>
+        @Html.TextAreaFor(x=>x.Content,new{@class="form-control",@rows=3})
+    </div>
+}
+

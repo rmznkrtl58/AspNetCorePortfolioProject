@@ -1,0 +1,22 @@
+﻿@model EntityLayer.Concrete.Service
+@{
+    ViewData["Title"] = "getservice";
+    Layout = "~/Views/Shared/_newadminLayout.cshtml";
+}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Hizmetlerin Güncellendiği Sayfadır.</h4>
+            @using (Html.BeginForm("getservice", "Service", FormMethod.Post))
+            {
+                @Html.HiddenFor(x=>x.ServiceId)
+                <div class="form-group">
+                    <label>Hizmet Adı:</label>
+                    <input type="text" class="form-control" style="color:white" asp-for="Title">
+                </div>
+                <button type="submit" class="btn btn-outline-success mr-2">Güncelle</button>
+            }
+        </div>
+    </div>
+</div>
+

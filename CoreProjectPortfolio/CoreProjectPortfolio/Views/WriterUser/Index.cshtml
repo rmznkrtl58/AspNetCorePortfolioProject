@@ -1,0 +1,42 @@
+﻿@model List<EntityLayer.Concrete.WriterUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_newadminlayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="p-2">
+        <button class="btn btn-primary" type="button" id="getlistall">Verileri Getir</button>
+    </div>
+</div>
+
+<h4 class="text-center">Yazar Listesi</h4>
+<div class="p-2" id="listuser">@*Controllerda tanımladığım json türünde listeleme yapacağım metod*@
+    Buraya veriler gelecek
+</div>
+
+@*Ajaxı kullanabilmem için aşağıdaki işlemleri yapmam gerekli*@
+@section Scripts
+{
+    <script>
+        @*id'si getlistall olan butona tıklanıldığı zaman*@
+            $("#getlistall").click(function()
+                {
+                $.ajax(
+                    {
+                        contentType: "application/json",
+                        dataType: "json",
+                        type: "get",//sayfa çağırıldığında
+                        url: "/WriterUser/ListUser/",@*listelenecek json türünde oluşturduğumuz metodun url actionunu verdik*@
+                success: function (funk) //yukardaki function işlemim başarılı olduysa funk isimli değerime işlemi ata
+                {   //js'de değişkenler let ile tanımlanır
+                    let users = jQuery.parseJSON(funk);//funk değişkenime atanmış işlemdeki listeleri json türüne çevir
+                    console.log(users);//users'e atanmış değerleri yazdır
+                    //console.log yazdırmak için kullanılır
+                }  
+                        });
+        });
+    </script>
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@*yukardaki scriptin çalışması için gerekli wwwrootiçerisindeki lib içindeki jqueryde *@

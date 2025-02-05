@@ -1,0 +1,38 @@
+﻿@model List<EntityLayer.Concrete.Message>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_newadminlayout.cshtml";
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">İletişim Mesajları:</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="color:white">Ad Soyad:</th>
+                            <th style="color:white">Mail:</th>
+                            <th style="color:white">Tarih:</th>
+                            <th style="color:white">SİL</th>
+                            <th style="color:white">Mesaj İçerik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.NameSurname</td>
+                                <td>@x.Mail</td>
+                                <td>@Convert.ToDateTime(x.Date).ToString("dd/MMM/yyyy")</td>
+                                <td><a href="/Contact/deletemessage/@x.MessageId/" class="btn btn-outline-danger">Sil</a></td>
+                                <td><a href="/Contact/getmessage/@x.MessageId/" class="btn btn-outline-warning">İçerik</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
