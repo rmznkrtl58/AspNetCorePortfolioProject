@@ -1,0 +1,2 @@
+Resimler:
+![Resim](./a1)
